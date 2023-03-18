@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load bootstrap5 %}
+{%block titleblock%}| Home{%endblock%}
+{%block bodyblock%}
+
+
+    <div class="row mt-2">
+        {% for object in posts %}
+        <div class="col-lg-4 mb-3 article">
+           <a href="{% url 'article:detail' pk=object.id %}" class="text-decoration-none text-dark">
+            <img src="{{object.image.url}}" class="img-fluid mb-2" alt="{{object.title}}">
+            <h5>{{object.title}}</h5>
+            <p class="fw-light">{{object.excerpt}}</p>
+           </a>
+        </div>
+        {% empty %}
+        <p class="text-center p-5 m-5">Nohing's here</p>
+        {% endfor %}
+    </div>
+  </div>
+
+
+ {%endblock%}

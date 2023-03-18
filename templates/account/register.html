@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load bootstrap5 %}
+{%block titleblock%}| Register{%endblock%}
+{%block bodyblock%}
+
+<div class="col-lg-8 mx-auto my-4">
+  <div class="row">
+    <div class="col">
+      <img src="{%static 'images/register.jpg'%}" height="500" alt="login image">
+    </div>
+    <div class="col"> 
+      <h4 class="text-center fw-light my-5">Articles Paradigm | Register </h4>
+      <form class="mt-5 " method="post">
+        {%csrf_token%}
+        {% bootstrap_form form %}
+        
+       <div class="d-flex justify-content-start">
+        <button type="submit" class="btn btn-info">Submit</button>
+       </div>
+      </form>
+    
+    </div>
+  </div>
+
+</div>
+
+
+ {%endblock%}
