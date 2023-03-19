@@ -9,7 +9,7 @@
         {% for object in posts %}
         <div class="col-lg-4 mb-3 article">
            <a href="{% url 'article:detail' pk=object.id %}" class="text-decoration-none text-dark">
-            <img src="{{object.image.url}}" class="img-fluid mb-2" alt="{{object.title}}">
+            <img src="{{object.image.url}}" class="mb-2 img-fluid"  alt="{{object.title}}">
             <h5>{{object.title}}</h5>
             <p class="fw-light">{{object.excerpt}}</p>
            </a>

@@ -12,12 +12,71 @@
         {{post.body|safe}}
     </div>
     <hr class="text-muted">
+    <div>
+       {% if request.user.is_authenticated %}
+       <h5 class="my-2">Add your Comment</h5>
+       <form class="d-flex" action="{%url 'article:add-comment'%}" method="post">
+           {%csrf_token%}
+           <input type="text" name="comment" maxlength="500" class="form-control me-3 " required>
+           <input type="text" name="postid" value="{{post.id}}" hidden>
+           <button type="submit" class="btn btn-info btn-sm ">Post Comment</button>
+       </form>
+       {%else%}
+       <p class="my-5 text-muted">Login to add your comments.</p>
+       {%endif%}
+
+        <h5 class="my-2 mt-3">Posted Comments:</h5>
+        {% for i in post.comments%}
+        <div class="bg-light p-4 mb-2">
+            <h5>{{i.user.username}} &nbsp; <span class="fw-light fs-6"> <i> {{i.created}}</i></span> </h6>
+            <p>{{i.text}}</p>
+
+            {% if request.user == i.user %}
+            <a type="button" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#exampleModal{{i.id}}" >edit</a>
+            <a class="ms-4 text-decoration-none" onclick="return confirm('Are you sure to remove your comment.')" href="{%url 'article:remove-comment' pk=i.id%}">remove</a>
+
+            <!-- Edit Modal -->
+<div class="modal fade" id="exampleModal{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Comment</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="d-flex" action="{%url 'article:update-comment' %}" method="post">
+                {%csrf_token%}
+                <input type="text" name="comment" value="{{i.text}}" maxlength="500" class="form-control me-3 " required>
+                <input type="text" name="commentid" value="{{i.id}}" hidden>
+        
+           
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-info btn-sm">Save changes</button>
+        </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+            {%endif%}
+
+        </div>
+        {%empty%}
+        <p class="p-3 text-center text-muted">No comments yet.</p>
+        {%endfor%}
+
+
+    </div>
+    <hr class="text-muted">
     <div class="mt-5">
         <h4>You may also like:</h4><br>
         <div class="row mt-3">
-            {% for y in similar_posts %}
+            {% for y in post.related_posts %}
             <div class="col-lg-3">
-                <a class="text-decoration-none text-dark " href="{{y.get_absolute_url}}">
+                <a class="text-decoration-none text-dark " href="{%url 'article:detail' pk=y.id%}">
                     <img src="{{y.image.url}}" alt="image" class="img-fluid">
                     <h6 class="mt-2">{{y.title}}</h6>
                 </a>

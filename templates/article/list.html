@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{%load static%}
+{% load bootstrap5 %}
+{%block titleblock%}| Home{%endblock%}
+{%block bodyblock%}
+<div class="col-lg-6 mx-auto">
+    <h4 class="text-center mt-3 p-3">YOUR ARTICLES</h4><br><br>
+    {% for object in posts %}
+    <div class="row mb-3">
+     <div class="col-md-10">
+        <a href="{%url 'article:detail' pk=object.id%}" class="text-decoration-none text-dark">
+           <h5>{{object.title}} &nbsp;
+             <i title="approved & published" class="text-primary fa-solid fa-circle-check fs-6"></i>
+           </h5>
+           
+           <p class="fw-light">{{object.excerpt}}</p>
+          </a>
+          <a type="button" href="{%url 'article:update' pk=object.id %}" class="btn btn-warning btn-sm " >Update</a >
+          <a type="button" onclick="return confirm('Are you sure to remove this article? ')" href="{%url 'article:delete' pk=object.id %}" class="btn btn-danger btn-sm" >Remove</a >
+         
+     </div>
+     <div class="col-md-2">
+        <img src="{{object.image.url}}" height="100" class="mb-2" alt="{{object.title}}">
+     </div>
+      
+    </div><hr class="text-light">
+    {% empty %}
+    <p class="text-center p-5 m-5">No articles yet.</p>
+    {% endfor %}
+   </div>
+
+
+ {%endblock%}

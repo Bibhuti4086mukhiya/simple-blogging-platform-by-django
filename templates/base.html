@@ -23,10 +23,10 @@
                     {% if request.user.is_authenticated %}
                     
                       <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{%url 'account:login' %}">Your Articles</a>
+                        <a class="nav-link active" aria-current="page" href="{%url 'article:list' %}">Your Articles</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="{% url 'account:register'%}">Add Article</a>
+                        <a class="nav-link" href="{% url 'article:add'%}">Add Article</a>
                       </li>
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
